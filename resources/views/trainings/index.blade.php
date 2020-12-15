@@ -16,6 +16,9 @@
 <th>ID</th>
 <th>Title</th>
 <th>Description</th>
+<th>User ID</th>
+<th>User</th>
+<th>Email</th>
 <th>Created at</th>
 </tr>
 </thead>
@@ -26,6 +29,9 @@
             <td>{{$training->id}}</td>
             <td>{{$training->title}}</td>
             <td>{{$training->description}}</td>
+            <td>{{$training->user_id}}</td>
+            <td>{{$training->user->name}}</td>
+            <td><strong>{{$training->user->email}}</strong></td>
             <td>{{$training->created_at ? $training-> created_at->diffForHumans():'No data'}}</td>
             </tr>
     @endforeach
