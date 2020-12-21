@@ -20,10 +20,12 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('admin/master/trainings',[App\Http\Controllers\TrainingController::class,'index'])->name('training:list');
 
-Route::get('/trainings',[App\Http\Controllers\TrainingController::class,'index'])->name('index');
-
+//Route::get('/trainings',[App\Http\Controllers\TrainingController::class,'index'])->name('index');
 Route::get('/users',[App\Http\Controllers\UserController::class,'index']) -> middleware('auth');
 
-Route::get('/trainings/create',[App\Http\Controllers\TrainingController::class,'create']);
+//Route::get('/trainings/create',[App\Http\Controllers\TrainingController::class,'create']);
+Route::get('/trainings/create',[App\Http\Controllers\TrainingController::class,'create'])->name('training:create');;
 Route::post('/trainings/create',[App\Http\Controllers\TrainingController::class,'store']);
+Route::get('/trainings/{id}',[App\Http\Controllers\TrainingController::class,'show'])->name('trainings:show');

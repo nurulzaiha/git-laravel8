@@ -33,6 +33,13 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
+<li class="navbar-nav mr-auto">
+<a class="nav-Link" href="{{route('training:list')}}">Training List</a>
+</li>
+<li class="navbar-nav mr-auto">
+<a class="nav-Link" href="{{route('training:create')}}">Training Create form</a>
+</li>
+
 
                     </ul>
 

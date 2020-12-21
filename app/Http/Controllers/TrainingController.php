@@ -40,5 +40,13 @@ public function store(Request $request){
     return redirect()->back();
 }
 
+public function show($id){
+    //find id on table using model
+    $training = Training ::find($id);
+//dd($training);
+    //return to view
+    return view('trainings.show', compact('training'));
+}
+
 }
 

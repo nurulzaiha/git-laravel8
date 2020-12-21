@@ -20,6 +20,7 @@
 <th>User</th>
 <th>Email</th>
 <th>Created at</th>
+<th>Actions</th>
 </tr>
 </thead>
 <tbody>
@@ -33,7 +34,11 @@
             <td>{{$training->user->name}}</td>
             <td><strong>{{$training->user->email}}</strong></td>
             <td>{{$training->created_at ? $training-> created_at->diffForHumans():'No data'}}</td>
+            <td>
+            <a href="{{route('trainings:show', $training)}}" class="btn btn-primary">View</a>
+            </td>
             </tr>
+
     @endforeach
 </tbody>
 </table>
