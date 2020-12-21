@@ -55,7 +55,9 @@ public function edit($id){
     //return to view
     return view('trainings.edit', compact('training'));
 }
-
+//public function update($id,Request $request){ -- ni asal xinstatiate
+//public function update(training $training,Request $request){ --find dah instatiate
+    // $training = Training ::find($id); --xpyh dah ltk kalo dah instatiate
 public function update($id,Request $request){
     //find id at table
     $training = Training ::find($id);
@@ -67,6 +69,11 @@ public function update($id,Request $request){
     $training ->update($request->only('title','description','trainer'));
 
     //return to training
+    return redirect()->route('training:list');
+}
+
+public function delete(Training $training){
+    $training->delete();
     return redirect()->route('training:list');
 }
 }

@@ -31,3 +31,5 @@ Route::post('/trainings/create',[App\Http\Controllers\TrainingController::class,
 Route::get('/trainings/{id}',[App\Http\Controllers\TrainingController::class,'show'])->name('trainings:show');
 Route::get('/trainings/{id}/edit',[App\Http\Controllers\TrainingController::class,'edit'])->name('trainings:edit');
 Route::post('/trainings/{id}/edit',[App\Http\Controllers\TrainingController::class,'update'])->name('trainings:update');
+//Route::post('/trainings/{training}/edit',[App\Http\Controllers\TrainingController::class,'update'])->name('trainings:update'); --ni yg instatiate utk find data id->ganti dgn training
+Route::get('/trainings/{training}/delete',[App\Http\Controllers\TrainingController::class,'delete'])->name('trainings:delete');
