@@ -5,7 +5,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">{{ __('Dashboard') }}</div>
 
@@ -21,6 +21,7 @@
 <th>Email</th>
 <th>Created at</th>
 <th>Actions</th>
+
 </tr>
 </thead>
 <tbody>
@@ -36,6 +37,9 @@
             <td>{{$training->created_at ? $training-> created_at->diffForHumans():'No data'}}</td>
             <td>
             <a href="{{route('trainings:show', $training)}}" class="btn btn-primary">View</a>
+            </td>
+            <td>
+            <a href="{{route('trainings:edit', $training)}}" class="btn btn-primary">Edit</a>
             </td>
             </tr>
 

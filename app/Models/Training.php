@@ -9,6 +9,9 @@ class Training extends Model
 {
     use HasFactory;
 
+    //tambah fillable property utk update data
+    protected $fillable = ['title','description','trainer'];
+
     //training belong to user
     //belongTo sebab ada Foreign Key
     public function user(){

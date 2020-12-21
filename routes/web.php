@@ -29,3 +29,5 @@ Route::get('/users',[App\Http\Controllers\UserController::class,'index']) -> mid
 Route::get('/trainings/create',[App\Http\Controllers\TrainingController::class,'create'])->name('training:create');;
 Route::post('/trainings/create',[App\Http\Controllers\TrainingController::class,'store']);
 Route::get('/trainings/{id}',[App\Http\Controllers\TrainingController::class,'show'])->name('trainings:show');
+Route::get('/trainings/{id}/edit',[App\Http\Controllers\TrainingController::class,'edit'])->name('trainings:edit');
+Route::post('/trainings/{id}/edit',[App\Http\Controllers\TrainingController::class,'update'])->name('trainings:update');

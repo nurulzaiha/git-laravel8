@@ -48,5 +48,26 @@ public function show($id){
     return view('trainings.show', compact('training'));
 }
 
+public function edit($id){
+    //find id
+    $training = Training ::find($id);
+
+    //return to view
+    return view('trainings.edit', compact('training'));
+}
+
+public function update($id,Request $request){
+    //find id at table
+    $training = Training ::find($id);
+
+    //update training
+    //method 1-popo(xguna ni)
+    //method 2-mass assignment (so guna ni)-define fillable input property kat model
+    //$training ->update($request->all()); --ni utk update semua
+    $training ->update($request->only('title','description','trainer'));
+
+    //return to training
+    return redirect()->route('training:list');
+}
 }
 
