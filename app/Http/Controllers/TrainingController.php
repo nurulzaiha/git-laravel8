@@ -9,7 +9,8 @@ class TrainingController extends Controller
 {
     public function index(){
         // query training
-       $trainings = \App\Models\Training::all();
+     //  $trainings = \App\Models\Training::all();//return semua
+       $trainings = \App\Models\Training::paginate(2);
    // dd($trainings); //cara nak debug
 
     
