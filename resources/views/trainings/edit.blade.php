@@ -28,6 +28,7 @@
 <input type ="text" name="trainer" class="form-control" value="{{$training->trainer}}">
 </div>
 
+
 <div class="form-group">
 <button type ="submit" class="btn btn-primary"> Update My Training</button>
 </div>

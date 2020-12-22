@@ -35,7 +35,7 @@
 <a href="{{$training->attachment_url}}" target="_blank">Open attachment<a>
 @endif
 
-<a href="javascript:history.back()" class="btn btn-primary">Back to Training list</a>
+<!-- <a href="javascript:history.back()" class="btn btn-primary">Back to Training list</a> -->
             
                 </div>
             </div>

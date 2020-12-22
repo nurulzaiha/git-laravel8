@@ -13,7 +13,19 @@
         </div>
         @endif
             <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
+                <div class="card-header">{{ __('Training Index') }}
+                
+                <div class="float-right">
+                <form method="GET" action="">
+
+                <div class="input-group">
+                <input type="text" name="keyword" class="form-control"/>
+                <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">Search</button>
+                </div>
+                </div>
+                </div>
+                </form>
 
                 <div class="card-body">
                 <table class="table">
@@ -57,7 +69,10 @@
 
 </table>
 
-{{$trainings->Links()}}
+{{$trainings
+->appends(['keyword' =>request()->get('keyword')
+])
+->Links()}}
               
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">

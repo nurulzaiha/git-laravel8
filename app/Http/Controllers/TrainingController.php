@@ -6,10 +6,29 @@ use Illuminate\Http\Request;
 use App\Models\Training;
 use File;
 use Storage;
+use App\Http\Requests\StoreTrainingRequest;
 
 class TrainingController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
+
+        if($request->keyword){
+            $search = $request->keyword;
+          
+            //$trainings = Training::where('title','LIKE','%'.$search.'%')->paginate(5);
+         
+            // $trainings = Training::where('title','LIKE','%'.$search.'%')
+            //->orWhere('description','LIKE','%'.$search.'%')
+            //->paginate(1);
+
+            $trainings = auth()->user()->trainings()->where('title','LIKE','%'.$search.'%')
+            ->orWhere('description','LIKE','%'.$search.'%')
+            ->orderBy('created_at','desc')
+            ->paginate(1);
+
+
+        }else{
+
         // query training
      //  $trainings = \App\Models\Training::all();//return semua
     
@@ -17,10 +36,11 @@ class TrainingController extends Controller
    // dd($trainings); //cara nak debug
    //get current aunthenticate user
 $user=auth()->user(); //ni yg login sja
+
 //get user trainings using relationship with paginate 5
 $trainings = $user->trainings()->paginate(5);
 //$trainings = $user->trainings()->latest()->paginate(2);
-    
+}
     //return to view 
     //resources/views/trainings/index.blade.php
     //return view('trainings.index');
@@ -32,7 +52,18 @@ public function create(){
     return view('trainings.create');
 }
 
-public function store(Request $request){
+public function store(StoreTrainingRequest $request){
+
+   // $this->validate(
+     //   $request,
+      //  [
+      //      'title'=>'required|min:3',
+      //      'description'=>'required|min:5',
+       //     'trainer'=>'required',
+            
+      //  ]
+     //   );
+    
     
     //store all data from form to training table
     //dd($request->all());
@@ -65,6 +96,7 @@ public function store(Request $request){
 public function show($id){
     //find id on table using model
     $training = Training ::find($id);
+    
 //dd($training);
     //return to view
     return view('trainings.show', compact('training'));
