@@ -6,6 +6,12 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
+        
+        @if(session()->has('alert-type'))
+        <div class="alert {{session()->get('alert-type')}}">
+        {{session()->get('alert')}}
+        </div>
+        @endif
             <div class="card">
                 <div class="card-header">{{ __('Dashboard') }}</div>
 
@@ -13,7 +19,7 @@
                 <table class="table">
 <thead>
 <tr>
-<th>ID</th>
+<th>Bil-id</th>
 <th>Title</th>
 <th>Description</th>
 <th>User ID</th>

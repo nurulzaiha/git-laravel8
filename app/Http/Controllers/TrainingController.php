@@ -4,15 +4,22 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Training;
+use File;
+use Storage;
 
 class TrainingController extends Controller
 {
     public function index(){
         // query training
      //  $trainings = \App\Models\Training::all();//return semua
-       $trainings = \App\Models\Training::paginate(2);
+    
+    //   $trainings = \App\Models\Training::paginate(2); --all keluar semua 
    // dd($trainings); //cara nak debug
-
+   //get current aunthenticate user
+$user=auth()->user(); //ni yg login sja
+//get user trainings using relationship with paginate 5
+$trainings = $user->trainings()->paginate(5);
+//$trainings = $user->trainings()->latest()->paginate(2);
     
     //return to view 
     //resources/views/trainings/index.blade.php
@@ -37,8 +44,22 @@ public function store(Request $request){
     $training->user_id= auth()->user()->id;
     $training->save();
 
+    if($request->hasFile('attachment')){
+        //rename file-  10-2020-12-22.jpg
+        $filename = $training->id.'-'.date("Y-m-d").'.'.$request->attachment->getClientOriginalExtension();
+        //store file on storage
+        Storage::disk('public')->put($filename, File::get($request->attachment));
+        //update row with filename
+        $training->update(['attachment'=>$filename]);
+    }
+
     //return redirect back
-    return redirect()->back();
+    //return redirect()->back();
+    return redirect()
+    ->route('training:list')
+    ->with([
+        'alert-type'=>'alert-primary',
+        'alert'=> 'Your training has been created!']);
 }
 
 public function show($id){
@@ -70,12 +91,28 @@ public function update($id,Request $request){
     $training ->update($request->only('title','description','trainer'));
 
     //return to training
-    return redirect()->route('training:list');
+   // return redirect()->route('training:list');
+   return redirect()
+    ->route('training:list')
+    ->with([
+        'alert-type'=>'alert-success',
+        'alert'=> 'Your training has been updated!']);
+
 }
 
 public function delete(Training $training){
+   if($training->attachment !=null){
+       Storage::disk('public')->delete($training->attachement);
+   }
+   
     $training->delete();
-    return redirect()->route('training:list');
+    //return redirect()->route('training:list');
+    return redirect()
+    ->route('training:list')
+    ->with([
+        'alert-type'=>'alert-danger',
+        'alert'=> 'Your training has been deleted!']);
+    
 }
 }
 

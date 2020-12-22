@@ -11,7 +11,8 @@
 
                 <div class="card-body">
                
-<form method="POST" action="">
+
+<form method="POST" action="" enctype="multipart/form-data">
 @csrf
 <div class="form-group">
 <label>Title</label>
@@ -26,6 +27,11 @@
 <div class="form-group">
 <label>Trainer</label>
 <input type ="text" name="trainer" class="form-control">
+</div>
+
+<div class="form-group">
+<label>Attachment</label>
+<input type="file" name="attachment" class="form-control">
 </div>
 
 <div class="form-group">

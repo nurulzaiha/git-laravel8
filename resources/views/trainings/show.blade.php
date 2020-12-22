@@ -28,9 +28,14 @@
 <input type ="text" name="trainer" class="form-control" required value="{{$training->trainer}}" readonly>
 </div>
 
-<div class="form-group">
-<button type ="submit" class="btn btn-primary"> Store My Training</button>
-</div>
+@if($training->attachment)
+
+<!-- <a href="{{asset('storage/'.$training->attachment)}}" target="_blank">Open attachment<a> -->
+
+<a href="{{$training->attachment_url}}" target="_blank">Open attachment<a>
+@endif
+
+<a href="javascript:history.back()" class="btn btn-primary">Back to Training list</a>
             
                 </div>
             </div>
