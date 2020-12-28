@@ -1,4 +1,4 @@
-<h1> hai trainings </h1>
+
 
 @extends('layouts.app')
 
@@ -12,6 +12,7 @@
         {{session()->get('alert')}}
         </div>
         @endif
+        
             <div class="card">
                 <div class="card-header">{{ __('Training Index') }}
                 
@@ -70,8 +71,7 @@
 </table>
 
 {{$trainings
-->appends(['keyword' =>request()->get('keyword')
-])
+->appends(['keyword' =>request()->get('keyword')])
 ->Links()}}
               
                     @if (session('status'))

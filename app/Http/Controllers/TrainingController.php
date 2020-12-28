@@ -7,6 +7,7 @@ use App\Models\Training;
 use File;
 use Storage;
 use App\Http\Requests\StoreTrainingRequest;
+use Mail;
 
 class TrainingController extends Controller
 {
@@ -32,14 +33,15 @@ class TrainingController extends Controller
         // query training
      //  $trainings = \App\Models\Training::all();//return semua
     
-    //   $trainings = \App\Models\Training::paginate(2); --all keluar semua 
-   // dd($trainings); //cara nak debug
+    //$trainings = \App\Models\Training::paginate(2); --all keluar semua 
+   //dd($trainings); //cara nak debug
    //get current aunthenticate user
 $user=auth()->user(); //ni yg login sja
 
 //get user trainings using relationship with paginate 5
 $trainings = $user->trainings()->paginate(5);
 //$trainings = $user->trainings()->latest()->paginate(2);
+
 }
     //return to view 
     //resources/views/trainings/index.blade.php
@@ -54,15 +56,15 @@ public function create(){
 
 public function store(StoreTrainingRequest $request){
 
-   // $this->validate(
+    //Ni pindah masuk ke app->http->requests->StoreTrainingRequest.php
+    // $this->validate(
      //   $request,
       //  [
       //      'title'=>'required|min:3',
       //      'description'=>'required|min:5',
-       //     'trainer'=>'required',
-            
+      //      'trainer'=>'required',       
       //  ]
-     //   );
+      //   );
     
     
     //store all data from form to training table
@@ -76,13 +78,28 @@ public function store(StoreTrainingRequest $request){
     $training->save();
 
     if($request->hasFile('attachment')){
+        
         //rename file-  10-2020-12-22.jpg
         $filename = $training->id.'-'.date("Y-m-d").'.'.$request->attachment->getClientOriginalExtension();
+        
         //store file on storage
         Storage::disk('public')->put($filename, File::get($request->attachment));
+        
         //update row with filename
         $training->update(['attachment'=>$filename]);
     }
+
+    //send email to user--day 5
+   // Mail::send('email.training-created',[ 
+     //   'title'=> $training->title,
+      //  'description'=>$training->description
+ //   ], function( $message){
+   //     $message->to('nurulzaihazainal@gmail.com');
+  //      $message->subject('training created using inline mail');
+ //   });
+ //send email to user guna mailable class
+
+ Mail::to('nurulzaihazainal@gmail.com')->send(new \App\Mail\TrainingCreated($training));
 
     //return redirect back
     //return redirect()->back();
@@ -94,25 +111,29 @@ public function store(StoreTrainingRequest $request){
 }
 
 public function show($id){
+    
     //find id on table using model
     $training = Training ::find($id);
     
-//dd($training);
+    //dd($training);  --check output keluar
     //return to view
     return view('trainings.show', compact('training'));
 }
 
 public function edit($id){
+    
     //find id
     $training = Training ::find($id);
 
     //return to view
     return view('trainings.edit', compact('training'));
 }
-//public function update($id,Request $request){ -- ni asal xinstatiate
-//public function update(training $training,Request $request){ --find dah instatiate
+    //public function update($id,Request $request){ -- ni asal xinstatiate
+    //public function update(training $training,Request $request){ --find dah instatiate
     // $training = Training ::find($id); --xpyh dah ltk kalo dah instatiate
+
 public function update($id,Request $request){
+    
     //find id at table
     $training = Training ::find($id);
 
@@ -123,7 +144,7 @@ public function update($id,Request $request){
     $training ->update($request->only('title','description','trainer'));
 
     //return to training
-   // return redirect()->route('training:list');
+    //return redirect()->route('training:list');
    return redirect()
     ->route('training:list')
     ->with([
@@ -138,6 +159,7 @@ public function delete(Training $training){
    }
    
     $training->delete();
+    
     //return redirect()->route('training:list');
     return redirect()
     ->route('training:list')

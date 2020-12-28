@@ -1,4 +1,3 @@
-<h1> hai trainings </h1>
 
 @extends('layouts.app')
 

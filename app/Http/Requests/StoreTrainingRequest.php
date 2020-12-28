@@ -24,15 +24,9 @@ class StoreTrainingRequest extends FormRequest
     public function rules()
     {
         return [
-
-
-   
                     'title'=>'required|min:3',
                     'description'=>'required|min:5',
                     'trainer'=>'required',
-                    
-                
-
             //
         ];
     }

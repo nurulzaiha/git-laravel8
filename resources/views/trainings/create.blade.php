@@ -24,6 +24,8 @@
                
 
 <form method="POST" action="" enctype="multipart/form-data">
+
+
 @csrf
 
 <div class="form-group">
