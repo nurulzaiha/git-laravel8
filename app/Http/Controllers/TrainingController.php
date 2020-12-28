@@ -89,18 +89,24 @@ public function store(StoreTrainingRequest $request){
         $training->update(['attachment'=>$filename]);
     }
 
-    //send email to user--day 5
-   // Mail::send('email.training-created',[ 
+    //send email to user--day 5 -ni guna biasa tanpa class
+   // Mail::send('email.training-created',[   //guna facade ada dot dot . .
      //   'title'=> $training->title,
       //  'description'=>$training->description
- //   ], function( $message){
+    //  ], function( $message){
    //     $message->to('nurulzaihazainal@gmail.com');
   //      $message->subject('training created using inline mail');
  //   });
- //send email to user guna mailable class
+ 
+ //send email to user guna mailable class bawa parameter $training utk msk dlm kelas TrainingCreated.php
+ //guna ni bg nak kurangkan code dlm controller so buat ia 1 kelas
+ //Mail::to('nurulzaihazainal@gmail.com')->send(new \App\Mail\TrainingCreated($training));
 
- Mail::to('nurulzaihazainal@gmail.com')->send(new \App\Mail\TrainingCreated($training));
-
+ //queue job
+ //kena run supervisor
+ //bpleh check kat db table:job
+ 
+ dispatch(new\App\Jobs\SendEmailJob($training));
     //return redirect back
     //return redirect()->back();
     return redirect()
