@@ -1,1 +1,1 @@
-<h1>Page tak dijumpai, HARAP MAKLUM!!</h1>
+<h1>404 Error-Page tak dijumpai, HARAP MAKLUM!!</h1>

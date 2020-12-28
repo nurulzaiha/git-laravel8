@@ -8,6 +8,10 @@ use File;
 use Storage;
 use App\Http\Requests\StoreTrainingRequest;
 use Mail;
+use Notification;
+use App\Notifications\DeleteTrainingNotification;
+use App\Notifications\CreateTrainingNotification;
+
 
 class TrainingController extends Controller
 {
@@ -33,13 +37,15 @@ class TrainingController extends Controller
         // query training
      //  $trainings = \App\Models\Training::all();//return semua
     
-    //$trainings = \App\Models\Training::paginate(2); --all keluar semua 
+     //ni utk paparkan semua
+    $trainings = \App\Models\Training::paginate(5);  
    //dd($trainings); //cara nak debug
+   
    //get current aunthenticate user
-$user=auth()->user(); //ni yg login sja
+//$user=auth()->user(); //ni yg login sja
 
 //get user trainings using relationship with paginate 5
-$trainings = $user->trainings()->paginate(5);
+//$trainings = $user->trainings()->paginate();
 //$trainings = $user->trainings()->latest()->paginate(2);
 
 }
@@ -50,11 +56,15 @@ $trainings = $user->trainings()->paginate(5);
 }
 public function create(){
 
+   
     //resources/views/trainings/create.blade.php
     return view('trainings.create');
 }
 
 public function store(StoreTrainingRequest $request){
+
+    $user=auth()->user();
+    Notification::send($user, new CreateTrainingNotification());
 
     //Ni pindah masuk ke app->http->requests->StoreTrainingRequest.php
     // $this->validate(
@@ -115,11 +125,15 @@ public function store(StoreTrainingRequest $request){
         'alert-type'=>'alert-primary',
         'alert'=> 'Your training has been created!']);
 }
+//public function show($id){ --msa kat get kena pakai id
+    //Route::get('/trainings/{id}',[App\Http\Controllers\TrainingController::class,'show'])->name('trainings:show');
 
-public function show($id){
+    public function show(Training $training){
+    
+    $this->authorize('view',$training);
     
     //find id on table using model
-    $training = Training ::find($id);
+    // $training = Training ::find($id); --jika bw parameter $id kena letak ni
     
     //dd($training);  --check output keluar
     //return to view
@@ -160,7 +174,12 @@ public function update($id,Request $request){
 }
 
 public function delete(Training $training){
-   if($training->attachment !=null){
+   
+   $user=auth()->user();
+   Notification::send($user, new DeleteTrainingNotification());
+   
+   
+    if($training->attachment !=null){
        Storage::disk('public')->delete($training->attachement);
    }
    

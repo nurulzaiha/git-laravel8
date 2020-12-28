@@ -12,7 +12,7 @@
         {{session()->get('alert')}}
         </div>
         @endif
-        
+
             <div class="card">
                 <div class="card-header">{{ __('Training Index') }}
                 
@@ -55,13 +55,19 @@
             <td><strong>{{$training->user->email}}</strong></td>
             <td>{{$training->created_at ? $training-> created_at->diffForHumans():'No data'}}</td>
             <td>
+            @can('view',$training)
             <a href="{{route('trainings:show', $training)}}" class="btn btn-primary">View</a>
+            @endcan
             </td>
             <td>
+            @can('view',$training)
             <a href="{{route('trainings:edit', $training)}}" class="btn btn-success">Edit</a>
+            @endcan
             </td>
             <td>
+            @can('view',$training)
             <a onclick="return confirm('Are you sure want to delete?')" href="{{route('trainings:delete', $training)}}" class="btn btn-danger">Delete</a>
+            @endcan
             </td>
             </tr>
 
