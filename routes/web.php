@@ -37,3 +37,4 @@ Route::post('/trainings/{id}/edit',[App\Http\Controllers\TrainingController::cla
 //Route::post('/trainings/{training}/edit',[App\Http\Controllers\TrainingController::class,'update'])->name('trainings:update'); --ni yg instatiate utk find data id->ganti dgn training
 Route::get('/trainings/{training}/delete',[App\Http\Controllers\TrainingController::class,'delete'])->name('trainings:delete');
 Route::get('/trainings/{training}/force-delete',[App\Http\Controllers\TrainingController::class,'forceDelete'])->name('trainings:forceDelete');
+Route::get('/admin/audits',[App\Http\Controllers\AuditController::class,'audit'])->middleware(['auth','admin']);

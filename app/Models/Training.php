@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
- //audit trail
+ //audit trail --set to kernel.php utk daftar
 use OwenIt\Auditing\Contracts\Auditable;
 
  //audit trail
