@@ -15,6 +15,14 @@ use App\Notifications\CreateTrainingNotification;
 
 class TrainingController extends Controller
 {
+
+    public function __construct()
+    {
+
+        $this->middleware(['auth','admin']);
+        
+    }
+
     public function index(Request $request){
 
         if($request->keyword){
@@ -41,11 +49,12 @@ class TrainingController extends Controller
     $trainings = \App\Models\Training::paginate(5);  
    //dd($trainings); //cara nak debug
    
-   //get current aunthenticate user
+//get current aunthenticate user
 //$user=auth()->user(); //ni yg login sja
 
 //get user trainings using relationship with paginate 5
 //$trainings = $user->trainings()->paginate();
+//paginate susun paling latest add
 //$trainings = $user->trainings()->latest()->paginate(2);
 
 }
@@ -103,21 +112,22 @@ public function store(StoreTrainingRequest $request){
    // Mail::send('email.training-created',[   //guna facade ada dot dot . .
      //   'title'=> $training->title,
       //  'description'=>$training->description
-    //  ], function( $message){
-   //     $message->to('nurulzaihazainal@gmail.com');
-  //      $message->subject('training created using inline mail');
- //   });
+     //  ], function( $message){
+    //     $message->to('nurulzaihazainal@gmail.com');
+    //      $message->subject('training created using inline mail');
+   //   });
  
  //send email to user guna mailable class bawa parameter $training utk msk dlm kelas TrainingCreated.php
  //guna ni bg nak kurangkan code dlm controller so buat ia 1 kelas
  //Mail::to('nurulzaihazainal@gmail.com')->send(new \App\Mail\TrainingCreated($training));
 
  //queue job
- //kena run supervisor
- //bpleh check kat db table:job
+ //kena run supervisor "php artisan queue:listen"
+ //boleh check kat db table:job
  
  dispatch(new\App\Jobs\SendEmailJob($training));
-    //return redirect back
+    
+ //return redirect back
     //return redirect()->back();
     return redirect()
     ->route('training:list')
@@ -125,10 +135,11 @@ public function store(StoreTrainingRequest $request){
         'alert-type'=>'alert-primary',
         'alert'=> 'Your training has been created!']);
 }
-//public function show($id){ --msa kat get kena pakai id
-    //Route::get('/trainings/{id}',[App\Http\Controllers\TrainingController::class,'show'])->name('trainings:show');
 
-    public function show(Training $training){
+//public function show($id){ --msa kat get kena pakai id
+//Route::get('/trainings/{id}',[App\Http\Controllers\TrainingController::class,'show'])->name('trainings:show');
+
+public function show(Training $training){
     
     $this->authorize('view',$training);
     
@@ -193,5 +204,28 @@ public function delete(Training $training){
         'alert'=> 'Your training has been deleted!']);
     
 }
+
+public function forceDelete(Training $training){
+   
+    $user=auth()->user();
+    Notification::send($user, new DeleteTrainingNotification());
+    
+    
+     if($training->attachment !=null){
+        Storage::disk('public')->delete($training->attachement);
+    }
+    
+     $training->forceDelete();
+     
+     //return redirect()->route('training:list');
+     return redirect()
+     ->route('training:list')
+     ->with([
+         'alert-type'=>'alert-danger',
+         'alert'=> 'Your training has been deleted!']);
+     
+ }
+
+
 }
 

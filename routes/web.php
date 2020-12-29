@@ -22,6 +22,9 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('admin/master/trainings',[App\Http\Controllers\TrainingController::class,'index'])->name('training:list');
 
+//tambah utk admin akses shja
+Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('admin');
+
 //Route::get('/trainings',[App\Http\Controllers\TrainingController::class,'index'])->name('index');
 Route::get('/users',[App\Http\Controllers\UserController::class,'index']) -> middleware('auth');
 
@@ -33,3 +36,4 @@ Route::get('/trainings/{id}/edit',[App\Http\Controllers\TrainingController::clas
 Route::post('/trainings/{id}/edit',[App\Http\Controllers\TrainingController::class,'update'])->name('trainings:update');
 //Route::post('/trainings/{training}/edit',[App\Http\Controllers\TrainingController::class,'update'])->name('trainings:update'); --ni yg instatiate utk find data id->ganti dgn training
 Route::get('/trainings/{training}/delete',[App\Http\Controllers\TrainingController::class,'delete'])->name('trainings:delete');
+Route::get('/trainings/{training}/force-delete',[App\Http\Controllers\TrainingController::class,'forceDelete'])->name('trainings:forceDelete');
