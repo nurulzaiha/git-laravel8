@@ -5,12 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+ //audit trail
+use OwenIt\Auditing\Contracts\Auditable;
 
-
-class Training extends Model
+ //audit trail
+class Training extends Model implements Auditable
 {
     use HasFactory;
     use SoftDeletes;
+    //audit trail
+    use \OwenIt\Auditing\Auditable;
 
     //tambah fillable property utk update data
     protected $fillable = ['title','description','trainer','attachment'];
