@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//testing buat layout baru
+Route::view('/test','admin.layouts.main');
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -38,3 +41,5 @@ Route::post('/trainings/{id}/edit',[App\Http\Controllers\TrainingController::cla
 Route::get('/trainings/{training}/delete',[App\Http\Controllers\TrainingController::class,'delete'])->name('trainings:delete');
 Route::get('/trainings/{training}/force-delete',[App\Http\Controllers\TrainingController::class,'forceDelete'])->name('trainings:forceDelete');
 Route::get('/admin/audits',[App\Http\Controllers\AuditController::class,'audit'])->middleware(['auth','admin']);
+
+Route::get('/language/{locale}',[App\Http\Controllers\LocalizationController::class,'changeLocale']);

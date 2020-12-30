@@ -90,6 +90,8 @@
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
+                                    <a class="dropdown-item"><i class="fas fa-id-badge"></i>IP: {{auth()->user()->previousLoginIp()??'Not found'}}</a>
+                                    <a class="dropdown-item"><i class="fas fa-id-card-alt"></i>Last Visit: {{auth()->user()->previousLoginAt()??'Not found'}}</a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf

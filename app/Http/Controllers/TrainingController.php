@@ -191,7 +191,7 @@ public function delete(Training $training){
    
    
     if($training->attachment !=null){
-       Storage::disk('public')->delete($training->attachement);
+       Storage::disk('public')->delete($training->attachment);
    }
    
     $training->delete();
@@ -212,7 +212,7 @@ public function forceDelete(Training $training){
     
     
      if($training->attachment !=null){
-        Storage::disk('public')->delete($training->attachement);
+        Storage::disk('public')->delete($training->attachment);
     }
     
      $training->forceDelete();
