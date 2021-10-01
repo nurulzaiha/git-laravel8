@@ -1,4 +1,3 @@
-
 @extends('admin.layouts.main')
 
 @section('content')
@@ -7,9 +6,12 @@
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active">Training List</li>
                         </ol>
+                        <!-- <li class="navbar-nav mr-auto">
+<a class="nav-Link" href="{{route('training:create')}}">Training Create form</a>
+</li> -->
                         <div class="row">
     
-        <div class="col-md-12">
+        <div class="col-md-14">
         
         @if(session()->has('alert-type'))
         <div class="alert {{session()->get('alert-type')}}">

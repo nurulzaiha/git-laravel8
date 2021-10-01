@@ -1,14 +1,10 @@
-<h1> hai Nurul Zaiha!! </h1>
-
-@extends('layouts.app')
+@extends('admin.layouts.main')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-                <div class="card-body">
+<div class="container-fluid">
+<h1 class="mt-4">Dashboard User</h1>
+                        <ol class="breadcrumb mb-4">
+                            <li class="breadcrumb-item active">User List</li>
 <table class="table">
 <thead>
 <tr>
